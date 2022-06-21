@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct SearchBar: View {
-    
     @Binding var searchText: String
     @Binding var isSearching: Bool
     var action: () -> Void
-    
     var body: some View {
         HStack {
             HStack {
@@ -30,27 +28,22 @@ struct SearchBar: View {
                 HStack {
                     Image(systemName: "magnifyingglass")
                     Spacer()
-                    
                     if isSearching {
-                        Button(action: { searchText = "" }, label: {
+                        Button(action: { searchText = "" }) {
                             Image(systemName: "xmark.circle.fill")
                                 .padding(.vertical)
-                        })
-                        
+                        }
+
                     }
-                    
                 }.padding(.horizontal, 32)
                 .foregroundColor(.gray)
             ).transition(.move(edge: .trailing))
             .animation(.spring())
-            
             if isSearching {
                 Button(action: {
-                        self.action()
-                        isSearching = false
-
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                    
+                    self.action()
+                    isSearching = false
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)          
                 }, label: {
                     Text("Search")
                         .padding(.trailing)
@@ -59,7 +52,6 @@ struct SearchBar: View {
                 .transition(.move(edge: .trailing))
                 .animation(.spring())
             }
-            
         }
     }
 }

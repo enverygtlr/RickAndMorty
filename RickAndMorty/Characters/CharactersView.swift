@@ -20,18 +20,14 @@ struct URLImage: View {
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 130, height: 130, alignment: .center)
                 .background(Color.gray)
-            
-              
         } else {
           ProgressView()
             .onAppear {
                 fetchData()
             }
-            
         }
        
     }
-    
     
     func fetchData() {
         guard let url = URL(string: urlString) else { return }
@@ -50,7 +46,6 @@ struct CharactersView: View {
     @State var searchText = ""
     @State var isSearching = false
 
-    
     @ObservedObject var charViewModel :CharactersViewModel
     
     init(urlList: [String]? = nil, locationName: String? = nil) {
@@ -91,13 +86,11 @@ struct CharactersView: View {
                             .shadow(color: .black, radius: 4, x: 0, y: 1))
                     .padding(5)
                     .onAppear {
-                        if (character == charViewModel.characters.last)
-                        {
+                        if (character == charViewModel.characters.last){
                             charViewModel.loadNextPage()
                         }
                     }
                 }
-               
                 if(charViewModel.isLoading)
                 {
                     ProgressView()
@@ -118,12 +111,8 @@ struct CharactersView: View {
         .onAppear() {
             charViewModel.fetch()
         }
-    
     }
-    
 }
-
-
 
 struct CharactersView_Previews: PreviewProvider {
     static var previews: some View {

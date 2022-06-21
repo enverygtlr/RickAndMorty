@@ -47,7 +47,6 @@ struct EpisodesView: View {
                                             .foregroundColor(.green)
                                     )
                         }
-                        
                     }
                     .padding(10)
                     .background(
@@ -56,21 +55,14 @@ struct EpisodesView: View {
                             .shadow(color: .black, radius: 4, x: 0, y: 1))
                     .padding(5)
                     .onAppear {
-                        if(episode == epiViewModel.episodes.last)
-                        {
+                        if(episode == epiViewModel.episodes.last){
                             epiViewModel.loadNextPage()
                         }
                     }
-                    
-                    
-                     if(epiViewModel.isLoading)
-                     {
+                     if(epiViewModel.isLoading) {
                          ProgressView()
                      }
-             
-                    
-                }
-                
+                }   
                 Spacer()
             }
         }

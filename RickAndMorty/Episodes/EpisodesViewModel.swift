@@ -30,11 +30,9 @@ struct EpisodesResponse: Codable, Hashable {
 class EpisodesViewModel : ObservableObject {
     @Published var episodes: [EpisodesResponse.Result] = []
     @Published var isLoading = false
-    
     private var nextUrl: String?
     
     func fetch(urlString: String? = "https://rickandmortyapi.com/api/episode", nameFilter :String = "", shouldAppend: Bool = false) {
-        
         var urlStr = urlString!
         
         if nameFilter != ""
@@ -53,19 +51,14 @@ class EpisodesViewModel : ObservableObject {
             } else {
                 self.episodes = episodesResponse.results
             }
-            
             self.nextUrl = episodesResponse.info.next
         }
-        
     }
     
-    func loadNextPage()
-    {
+    func loadNextPage() {
         if let nextUrl = nextUrl {
             isLoading = true
             fetch(urlString: nextUrl, shouldAppend: true)
         }
     }
-    
-    
 }
