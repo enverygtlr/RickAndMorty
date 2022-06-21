@@ -13,19 +13,19 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 20.0) {
-                    Image("logo")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 280, height: 100, alignment: .center)
-                        .padding(5)
-                        .background(Color.black.cornerRadius(30))
-                    
+                Image("logo")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 280, height: 100, alignment: .center)
+                    .padding(5)
+                    .background(Color.black.cornerRadius(30))
+                
                 NavigationLink(destination: LocationsView(), tag: 1, selection: $selection) {
                     MainViewButton(title: "Locations", imageName: "locations") {
-                            selection = 1
-                        }
+                        selection = 1
                     }
-                    
+                }
+                
                 NavigationLink(destination: CharactersView(), tag: 2, selection: $selection) {
                     MainViewButton(title: "Characters", imageName: "characters") {
                         selection = 2
@@ -37,13 +37,13 @@ struct MainView: View {
                     }
                 }
                 
-                    Spacer()
-                }
+                Spacer()
+            }
             .navigationBarHidden(true)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(
                 LinearGradient(gradient: Gradient(
-                               colors: [.green, .yellow]),
+                                colors: [.green, .yellow]),
                                startPoint: .top,
                                endPoint: .bottom)
                     .ignoresSafeArea()
@@ -51,7 +51,7 @@ struct MainView: View {
         }
         
     }
-
+    
     
     struct MainViewButton: View {
         var title: String
@@ -76,13 +76,13 @@ struct MainView: View {
                                         .foregroundColor(.black)
                                         .opacity(0.5))
                         .padding(5)
-                        
-                        
+                    
+                    
                 }
             }).shadow(color: .black, radius: 4, x: 0, y: 1)
         }
     }
-
+    
 }
 
 struct ContentView_Previews: PreviewProvider {

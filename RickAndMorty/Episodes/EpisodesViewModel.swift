@@ -30,7 +30,7 @@ struct EpisodesResponse: Codable, Hashable {
 class EpisodesViewModel : ObservableObject {
     @Published var episodes: [EpisodesResponse.Result] = []
     @Published var isLoading = false
-
+    
     private var nextUrl: String?
     
     func fetch(urlString: String? = "https://rickandmortyapi.com/api/episode", nameFilter :String = "", shouldAppend: Bool = false) {
@@ -44,34 +44,18 @@ class EpisodesViewModel : ObservableObject {
             print("NEW URL: \(urlStr)")
         }
         
-        guard let url = URL(string: urlStr) else { return }
-
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            guard let data = data, error == nil else {
-                return
+        Utility.fetch(type: EpisodesResponse.self, urlString: urlStr)
+        { episodesResponse in
+            self.isLoading = false
+            
+            if shouldAppend {
+                self.episodes.append(contentsOf: episodesResponse.results)
+            } else {
+                self.episodes = episodesResponse.results
             }
-                
-            do {
-                let episodesResponse = try JSONDecoder().decode(EpisodesResponse.self, from: data)
-                
-                 DispatchQueue.main.async {
-                    self?.isLoading = false
-
-                    if shouldAppend {
-                        self?.episodes.append(contentsOf: episodesResponse.results)
-                    } else {
-                        self?.episodes = episodesResponse.results
-                    }
-                    
-                    self?.nextUrl = episodesResponse.info.next
-                }
-            }
-            catch {
-                print(error)
-            }
+            
+            self.nextUrl = episodesResponse.info.next
         }
-
-        task.resume()
         
     }
     

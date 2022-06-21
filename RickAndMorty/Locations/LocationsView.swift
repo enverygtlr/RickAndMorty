@@ -9,10 +9,10 @@ import SwiftUI
 
 struct LocationsView: View {
     @ObservedObject var locViewModel = LocationsViewModel()
-
+    
     @State var searchText = ""
     @State var isSearching = false
-
+    
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 20.0) {
@@ -40,13 +40,13 @@ struct LocationsView: View {
                         NavigationLink(
                             destination: CharactersView(urlList: location.residents, locationName: location.name))
                         {
-                                Text("Characters")
-                                    .foregroundColor(Color.black)
-                                    .padding(5)
-                                    .background(
-                                        RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                                            .foregroundColor(.green)
-                                    )
+                            Text("Characters")
+                                .foregroundColor(Color.black)
+                                .padding(5)
+                                .background(
+                                    RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+                                        .foregroundColor(.green)
+                                )
                         }
                         
                     }
@@ -64,11 +64,11 @@ struct LocationsView: View {
                     }
                     
                     
-                     if(locViewModel.isLoading)
-                     {
-                         ProgressView()
-                     }
-             
+                    if(locViewModel.isLoading)
+                    {
+                        ProgressView()
+                    }
+                    
                     
                 }
                 
@@ -79,7 +79,7 @@ struct LocationsView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
             LinearGradient(gradient: Gradient(
-                           colors: [.green, .yellow]),
+                            colors: [.green, .yellow]),
                            startPoint: .top,
                            endPoint: .bottom)
                 .ignoresSafeArea()

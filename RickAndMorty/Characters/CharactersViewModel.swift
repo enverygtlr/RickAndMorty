@@ -62,39 +62,17 @@ class CharactersViewModel : ObservableObject {
         if let urlList = urlList {
             
             for charUrl in urlList {
-                guard let url = URL(string: charUrl) else { return }
-
-                let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-                    guard let data = data, error == nil else {
-                        return
-                    }
-                        
-                    do {
-                        let charactersResponse = try JSONDecoder().decode(CharacterResponse.Result.self, from: data)
-                        
-                        DispatchQueue.main.async {
-                            self?.characters.append(charactersResponse)
-                        }
-                    }
-                    catch {
-                        print(error)
-                    }
-                
-                    }
-
-                task.resume()
+                Utility.fetch(type: CharacterResponse.Result.self ,urlString: charUrl)
+                { charactersResponse in
+                    self.characters.append(charactersResponse)
+                }
             }
-    
         } else {
             fetchDefaultList()
         }
         
     }
     
-    func filterCharacters(nameFilter: String)
-    {
-        characters = characters.filter {$0.name.contains(nameFilter)}
-    }
     
     func fetchDefaultList(urlString: String? = "https://rickandmortyapi.com/api/character", shouldAppend: Bool = false, nameFilter :String = "")  {
         
@@ -104,42 +82,23 @@ class CharactersViewModel : ObservableObject {
         {
             urlStr = "\(urlStr!)/?name=\(nameFilter.replacingOccurrences(of: " ", with: "+"))"
         }
-
-        guard let url = URL(string: urlStr!) else { return }
         
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            guard let data = data, error == nil else {
-                return
+        Utility.fetch(type: CharacterResponse.self ,urlString: urlStr!)
+        { charactersResponse in
+            let charactersToAdd = charactersResponse.results
+            self.isLoading = false
+            
+            if shouldAppend {
+                self.characters.append(contentsOf: charactersToAdd)
+            } else {
+                self.characters = charactersToAdd
             }
-                
-            do {
-                let charactersResponse = try JSONDecoder().decode(CharacterResponse.self, from: data)
-                
-                var charactersToAdd = charactersResponse.results
-                
-//                if let locationFilter = self?.locationFilter {
-//                    charactersToAdd = charactersResponse.results.filter {$0.location.name.contains(locationFilter)}
-//                }
-//
-               
-                DispatchQueue.main.async {
-                    self?.isLoading = false
-                    
-                    if shouldAppend {
-                        self?.characters.append(contentsOf: charactersToAdd)
-                    } else {
-                        self?.characters = charactersToAdd
-                    }
-                    self?.nextUrl = charactersResponse.info.next
-                }
-            }
-            catch {
-                print(error)
-            }
-        
+            self.nextUrl = charactersResponse.info.next
         }
+        
+        
+        
 
-        task.resume()
     }
     
     func loadNextPage()

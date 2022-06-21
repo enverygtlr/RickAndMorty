@@ -48,35 +48,20 @@ class LocationsViewModel : ObservableObject {
             urlStr = "\(urlStr)/?name=\(nameFilter.replacingOccurrences(of: " ", with: "+"))"
         }
         
-        guard let url = URL(string: urlStr) else { return }
-
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            guard let data = data, error == nil else {
-                return
+        
+        Utility.fetch(type: LocationsResponse.self, urlString: urlStr)
+        { locationsResponse in
+            self.isLoading = false
+            
+            if shouldAppend {
+                self.locations.append(contentsOf: locationsResponse.results)
+            } else {
+                self.locations = locationsResponse.results
             }
-                
-            do {
-                let locationsResponse = try JSONDecoder().decode(LocationsResponse.self, from: data)
-                
-                 DispatchQueue.main.async {
-                    self?.isLoading = false
-
-                    if shouldAppend {
-                        self?.locations.append(contentsOf: locationsResponse.results)
-                    } else {
-                        self?.locations = locationsResponse.results
-                    }
-                    
-                    self?.nextUrl = locationsResponse.info.next
-                }
-            }
-            catch {
-                self?.dataText = "\(error)"
-                print(error)
-            }
+            
+            self.nextUrl = locationsResponse.info.next
         }
-
-        task.resume()
+        
         
     }
     
