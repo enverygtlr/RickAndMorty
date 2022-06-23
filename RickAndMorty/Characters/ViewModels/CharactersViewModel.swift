@@ -48,10 +48,14 @@ class CharactersViewModel: ObservableObject {
         self.urlList = urlList
         self.locationFilter = locationName
     }
+    
     func fetch() {
         if let urlList = urlList {
             for charUrl in urlList {
-                Utility.fetch(type: CharacterResponse.Result.self, urlString: charUrl) { charactersResponse in
+                
+                guard let url = URL(string: charUrl) else { return }
+                
+                Utility.fetch(type: CharacterResponse.Result.self, url: url) { charactersResponse in
                     self.characters.append(charactersResponse)
                 }
             }
@@ -60,12 +64,11 @@ class CharactersViewModel: ObservableObject {
         }
     }
 
-    func fetchDefaultList(urlString: String? = "https://rickandmortyapi.com/api/character", shouldAppend: Bool = false, nameFilter :String = "")  {
-        var urlStr = urlString
-        if nameFilter != "" {
-            urlStr = "\(urlStr!)/?name=\(nameFilter.replacingOccurrences(of: " ", with: "+"))"
-        }
-        Utility.fetch(type: CharacterResponse.self, urlString: urlStr!) { charactersResponse in
+    func fetchDefaultList(url: URL? = nil,nameFilter :String? = nil, shouldAppend: Bool = false) {
+        
+        
+        Utility.fetch(type: CharacterResponse.self, url: url ?? RickAndMortyAPI.characters(name: nameFilter).url!)
+        { charactersResponse in
             let charactersToAdd = charactersResponse.results
             self.isLoading = false
             if shouldAppend {
@@ -76,14 +79,16 @@ class CharactersViewModel: ObservableObject {
             self.nextUrl = charactersResponse.info.next
         }
     }
+    
     func loadNextPage()
     {
-        print("NEXT URL= \(nextUrl ?? "EMPTY")")
         if let nextUrl = nextUrl {
+            guard let url = URL(string: nextUrl) else { return }
             isLoading = true
-            fetchDefaultList(urlString: nextUrl, shouldAppend: true)
+            fetchDefaultList(url: url, shouldAppend: true)
         }
     }
+    
 }
 
 struct CharTestView: View {

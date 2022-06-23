@@ -32,17 +32,10 @@ class EpisodesViewModel : ObservableObject {
     @Published var isLoading = false
     private var nextUrl: String?
     
-    func fetch(urlString: String? = "https://rickandmortyapi.com/api/episode", nameFilter :String = "", shouldAppend: Bool = false) {
-        var urlStr = urlString!
+    func fetch(url: URL? = nil,nameFilter :String? = nil, shouldAppend: Bool = false) {
         
-        if nameFilter != ""
-        {
-            urlStr = "\(urlStr)/?name=\(nameFilter.replacingOccurrences(of: " ", with: "+"))"
-            
-            print("NEW URL: \(urlStr)")
-        }
         
-        Utility.fetch(type: EpisodesResponse.self, urlString: urlStr)
+        Utility.fetch(type: EpisodesResponse.self, url: url ?? RickAndMortyAPI.episodes(name: nameFilter).url!)
         { episodesResponse in
             self.isLoading = false
             
@@ -55,10 +48,14 @@ class EpisodesViewModel : ObservableObject {
         }
     }
     
-    func loadNextPage() {
+    func loadNextPage()
+    {
         if let nextUrl = nextUrl {
+            guard let url = URL(string: nextUrl) else { return }
             isLoading = true
-            fetch(urlString: nextUrl, shouldAppend: true)
+            fetch(url: url, shouldAppend: true)
         }
     }
+    
+
 }

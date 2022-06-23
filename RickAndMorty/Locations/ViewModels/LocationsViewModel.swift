@@ -39,17 +39,10 @@ class LocationsViewModel : ObservableObject {
     private var nextUrl: String?
 
     
-    func fetch(urlString: String? = "https://rickandmortyapi.com/api/location", nameFilter :String = "", shouldAppend: Bool = false) {
+    func fetch(url: URL? = nil,nameFilter :String? = nil, shouldAppend: Bool = false) {
+                
         
-        var urlStr = urlString!
-        
-        if nameFilter != ""
-        {
-            urlStr = "\(urlStr)/?name=\(nameFilter.replacingOccurrences(of: " ", with: "+"))"
-        }
-        
-        
-        Utility.fetch(type: LocationsResponse.self, urlString: urlStr)
+        Utility.fetch(type: LocationsResponse.self, url: url ?? RickAndMortyAPI.locations(name: nameFilter).url!)
         { locationsResponse in
             self.isLoading = false
             
@@ -68,8 +61,9 @@ class LocationsViewModel : ObservableObject {
     func loadNextPage()
     {
         if let nextUrl = nextUrl {
+            guard let url = URL(string: nextUrl) else { return }
             isLoading = true
-            fetch(urlString: nextUrl, shouldAppend: true)
+            fetch(url: url, shouldAppend: true)
         }
     }
     

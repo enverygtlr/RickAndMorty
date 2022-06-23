@@ -9,8 +9,7 @@ import Foundation
 import SwiftUI
 
 struct Utility {
-    static func fetch<HandlerInput: Codable>(type: HandlerInput.Type ,urlString: String, completionHandler: @escaping (HandlerInput) -> Void ){
-        guard let url = URL(string: urlString) else { return }
+    static func fetch<HandlerInput: Codable>(type: HandlerInput.Type ,url: URL, completionHandler: @escaping (HandlerInput) -> Void ){
         
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else {

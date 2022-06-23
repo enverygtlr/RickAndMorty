@@ -11,6 +11,7 @@
 		B513061E285F96BE00E316E0 /* EpisodesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B513061D285F96BE00E316E0 /* EpisodesViewModel.swift */; };
 		B5130623285F983C00E316E0 /* EpisodesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5130622285F983C00E316E0 /* EpisodesView.swift */; };
 		B5130628285FA1FF00E316E0 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5130627285FA1FF00E316E0 /* SearchBar.swift */; };
+		B530D3792864713E00ECD1DA /* RickAndMortyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B530D3782864713E00ECD1DA /* RickAndMortyAPI.swift */; };
 		B55538FD2858AE89003CE351 /* CharactersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55538FC2858AE89003CE351 /* CharactersViewModel.swift */; };
 		B55539072858BB02003CE351 /* CharactersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55539062858BB02003CE351 /* CharactersView.swift */; };
 		B55B6F7A2857369200AA7566 /* RickAndMortyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55B6F792857369200AA7566 /* RickAndMortyApp.swift */; };
@@ -45,6 +46,7 @@
 		B513061D285F96BE00E316E0 /* EpisodesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesViewModel.swift; sourceTree = "<group>"; };
 		B5130622285F983C00E316E0 /* EpisodesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesView.swift; sourceTree = "<group>"; };
 		B5130627285FA1FF00E316E0 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		B530D3782864713E00ECD1DA /* RickAndMortyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyAPI.swift; sourceTree = "<group>"; };
 		B55538FC2858AE89003CE351 /* CharactersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersViewModel.swift; sourceTree = "<group>"; };
 		B55539062858BB02003CE351 /* CharactersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersView.swift; sourceTree = "<group>"; };
 		B55B6F762857369200AA7566 /* RickAndMorty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMorty.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,8 +93,8 @@
 		B51F3FBA2861A59B00C79116 /* Characters */ = {
 			isa = PBXGroup;
 			children = (
-				B55538FC2858AE89003CE351 /* CharactersViewModel.swift */,
-				B55539062858BB02003CE351 /* CharactersView.swift */,
+				B530D370286470C300ECD1DA /* ViewModels */,
+				B530D371286470CA00ECD1DA /* Views */,
 			);
 			path = Characters;
 			sourceTree = "<group>";
@@ -100,8 +102,8 @@
 		B51F3FBB2861A5B700C79116 /* Episodes */ = {
 			isa = PBXGroup;
 			children = (
-				B5130622285F983C00E316E0 /* EpisodesView.swift */,
-				B513061D285F96BE00E316E0 /* EpisodesViewModel.swift */,
+				B530D372286470D300ECD1DA /* Views */,
+				B530D376286470ED00ECD1DA /* ViewModels */,
 			);
 			path = Episodes;
 			sourceTree = "<group>";
@@ -109,10 +111,75 @@
 		B51F3FBF2861A96500C79116 /* Locations */ = {
 			isa = PBXGroup;
 			children = (
-				B55B6FAA2857700800AA7566 /* LocationsView.swift */,
-				B55B6FAF2857701C00AA7566 /* LocationsViewModel.swift */,
+				B530D36D286470A300ECD1DA /* Views */,
+				B530D36F286470B900ECD1DA /* ViewModels */,
 			);
 			path = Locations;
+			sourceTree = "<group>";
+		};
+		B530D36D286470A300ECD1DA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B55B6FAA2857700800AA7566 /* LocationsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B530D36F286470B900ECD1DA /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B55B6FAF2857701C00AA7566 /* LocationsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		B530D370286470C300ECD1DA /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B55538FC2858AE89003CE351 /* CharactersViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		B530D371286470CA00ECD1DA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B55539062858BB02003CE351 /* CharactersView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B530D372286470D300ECD1DA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B5130622285F983C00E316E0 /* EpisodesView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B530D376286470ED00ECD1DA /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B513061D285F96BE00E316E0 /* EpisodesViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		B530D3772864712B00ECD1DA /* APIs */ = {
+			isa = PBXGroup;
+			children = (
+				B530D3782864713E00ECD1DA /* RickAndMortyAPI.swift */,
+			);
+			path = APIs;
+			sourceTree = "<group>";
+		};
+		B530D37E28647FC400ECD1DA /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				B50C11B42861AF26006006B9 /* Utility.swift */,
+				B5130627285FA1FF00E316E0 /* SearchBar.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		B55B6F6D2857369200AA7566 = {
@@ -140,8 +207,8 @@
 			children = (
 				B55B6F792857369200AA7566 /* RickAndMortyApp.swift */,
 				B55B6F7B2857369200AA7566 /* MainView.swift */,
-				B50C11B42861AF26006006B9 /* Utility.swift */,
-				B5130627285FA1FF00E316E0 /* SearchBar.swift */,
+				B530D37E28647FC400ECD1DA /* Common */,
+				B530D3772864712B00ECD1DA /* APIs */,
 				B51F3FBF2861A96500C79116 /* Locations */,
 				B51F3FBA2861A59B00C79116 /* Characters */,
 				B51F3FBB2861A5B700C79116 /* Episodes */,
@@ -312,6 +379,7 @@
 				B55B6F7C2857369200AA7566 /* MainView.swift in Sources */,
 				B55539072858BB02003CE351 /* CharactersView.swift in Sources */,
 				B55B6F7A2857369200AA7566 /* RickAndMortyApp.swift in Sources */,
+				B530D3792864713E00ECD1DA /* RickAndMortyAPI.swift in Sources */,
 				B5130623285F983C00E316E0 /* EpisodesView.swift in Sources */,
 				B5130628285FA1FF00E316E0 /* SearchBar.swift in Sources */,
 				B55B6FB02857701C00AA7566 /* LocationsViewModel.swift in Sources */,
